@@ -105,4 +105,4 @@ MIT
 
 ## Credits
 
-- hana+nils · Büro für Gestaltung
+[hana+nils · Büro für Gestaltung](https://hananils.de)
