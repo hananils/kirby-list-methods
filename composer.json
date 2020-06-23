@@ -1,0 +1,15 @@
+{
+    "name": "hananils/kirby-link-methods",
+    "description": "Methods to convert Kirby objects to natural comma-speparated lists",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hana+nils · Büro für Gestaltung",
+            "email": "buero@hananils.de"
+        }
+    ],
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    }
+}
