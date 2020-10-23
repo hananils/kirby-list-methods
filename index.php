@@ -1,7 +1,5 @@
 <?php
 
-@include_once __DIR__ . '/vendor/autoload.php';
-
 use Kirby\Toolkit\Template;
 
 Kirby::plugin('hananils/list-methods', [
@@ -14,7 +12,11 @@ Kirby::plugin('hananils/list-methods', [
         ]
     ],
     'usersMethods' => [
-        'toList' => function ($field = 'username', $conjunction = false, $link = null) {
+        'toList' => function (
+            $field = 'username',
+            $conjunction = false,
+            $link = null
+        ) {
             $data = [];
             foreach ($this as $user) {
                 if ($link !== null) {
@@ -34,7 +36,11 @@ Kirby::plugin('hananils/list-methods', [
         }
     ],
     'pagesMethods' => [
-        'toList' => function ($field = 'title', $conjunction = false, $link = null) {
+        'toList' => function (
+            $field = 'title',
+            $conjunction = false,
+            $link = null
+        ) {
             $data = [];
             foreach ($this as $page) {
                 if ($link !== null) {
@@ -54,7 +60,11 @@ Kirby::plugin('hananils/list-methods', [
         }
     ],
     'filesMethods' => [
-        'toList' => function ($field = 'filename', $conjunction = false, $link = null) {
+        'toList' => function (
+            $field = 'filename',
+            $conjunction = false,
+            $link = null
+        ) {
             $data = [];
             foreach ($this as $file) {
                 if ($link !== null) {
