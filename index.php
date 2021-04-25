@@ -11,6 +11,30 @@ Kirby::plugin('hananils/list-methods', [
             'hananils.list-methods.conjunction' => 'und'
         ]
     ],
+    'collectionMethods' => [
+        'toList' => function (
+            $field = 'title',
+            $conjunction = false,
+            $link = null
+        ) {
+            $data = [];
+            foreach ($this as $item) {
+                if ($link !== null) {
+                    $href = Str::template($link, [
+                        'kirby' => kirby(),
+                        'site' => site(),
+                        'item' => $item
+                    ]);
+
+                    $data[] = Html::a($href, $item->$field());
+                } else {
+                    $data[] = $item->$field();
+                }
+            }
+
+            return naturalList($data, $conjunction);
+        }
+    ],
     'usersMethods' => [
         'toList' => function (
             $field = 'username',
