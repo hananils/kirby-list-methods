@@ -15,10 +15,18 @@ Kirby::plugin('hananils/list-methods', [
         'toList' => function (
             $field = 'title',
             $conjunction = false,
-            $link = null
+            $link = null,
+            $method = null
         ) {
             $data = [];
+
             foreach ($this as $item) {
+                $text = $item->$field();
+
+                if ($method !== null) {
+                    $text = $text->$method();
+                }
+
                 if ($link !== null) {
                     $href = Str::template($link, [
                         'kirby' => kirby(),
@@ -26,9 +34,9 @@ Kirby::plugin('hananils/list-methods', [
                         'item' => $item
                     ]);
 
-                    $data[] = Html::a($href, $item->$field());
+                    $data[] = '<a href="' . $href . '">' . $text . '</a>';
                 } else {
-                    $data[] = $item->$field();
+                    $data[] = $text;
                 }
             }
 
@@ -39,10 +47,18 @@ Kirby::plugin('hananils/list-methods', [
         'toList' => function (
             $field = 'username',
             $conjunction = false,
-            $link = null
+            $link = null,
+            $method = null
         ) {
             $data = [];
+
             foreach ($this as $user) {
+                $text = $user->$field();
+
+                if ($method !== null) {
+                    $text = $text->$method();
+                }
+
                 if ($link !== null) {
                     $href = Str::template($link, [
                         'kirby' => kirby(),
@@ -50,9 +66,9 @@ Kirby::plugin('hananils/list-methods', [
                         'user' => $user
                     ]);
 
-                    $data[] = Html::a($href, $user->$field());
+                    $data[] = '<a href="' . $href . '">' . $text . '</a>';
                 } else {
-                    $data[] = $user->$field();
+                    $data[] = $text;
                 }
             }
 
@@ -63,10 +79,18 @@ Kirby::plugin('hananils/list-methods', [
         'toList' => function (
             $field = 'title',
             $conjunction = false,
-            $link = null
+            $link = null,
+            $method = null
         ) {
             $data = [];
+
             foreach ($this as $page) {
+                $text = $page->$field();
+
+                if ($method !== null) {
+                    $text = $text->$method();
+                }
+
                 if ($link !== null) {
                     $href = Str::template($link, [
                         'kirby' => kirby(),
@@ -74,9 +98,9 @@ Kirby::plugin('hananils/list-methods', [
                         'page' => $page
                     ]);
 
-                    $data[] = Html::a($href, $page->$field());
+                    $data[] = '<a href="' . $href . '">' . $text . '</a>';
                 } else {
-                    $data[] = $page->$field();
+                    $data[] = $text;
                 }
             }
 
@@ -87,10 +111,18 @@ Kirby::plugin('hananils/list-methods', [
         'toList' => function (
             $field = 'filename',
             $conjunction = false,
-            $link = null
+            $link = null,
+            $method = null
         ) {
             $data = [];
+
             foreach ($this as $file) {
+                $text = $file->$field();
+
+                if ($method !== null) {
+                    $text = $text->$method();
+                }
+
                 if ($link !== null) {
                     $href = Str::template($link, [
                         'kirby' => kirby(),
@@ -98,9 +130,9 @@ Kirby::plugin('hananils/list-methods', [
                         'file' => $file
                     ]);
 
-                    $data[] = Html::a($href, $file->$field());
+                    $data[] = '<a href="' . $href . '">' . $text . '</a>';
                 } else {
-                    $data[] = $file->$field();
+                    $data[] = $text;
                 }
             }
 
