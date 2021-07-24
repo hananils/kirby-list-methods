@@ -23,7 +23,7 @@ Kirby::plugin('hananils/list-methods', [
             foreach ($this as $item) {
                 $text = $item->$field();
 
-                if ($method !== null) {
+                if ($method !== null && method_exists($text, $method)) {
                     $text = $text->$method();
                 }
 
@@ -55,7 +55,7 @@ Kirby::plugin('hananils/list-methods', [
             foreach ($this as $user) {
                 $text = $user->$field();
 
-                if ($method !== null) {
+                if ($method !== null && method_exists($text, $method)) {
                     $text = $text->$method();
                 }
 
@@ -87,7 +87,7 @@ Kirby::plugin('hananils/list-methods', [
             foreach ($this as $page) {
                 $text = $page->$field();
 
-                if ($method !== null) {
+                if ($method !== null && method_exists($text, $method)) {
                     $text = $text->$method();
                 }
 
