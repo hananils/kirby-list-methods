@@ -5,43 +5,16 @@ use Kirby\Toolkit\Template;
 Kirby::plugin('hananils/list-methods', [
     'translations' => [
         'en' => [
-            'hananils.list-methods.conjunction' => 'and'
+            'hananils.list-methods.conjunction' => 'and',
         ],
         'de' => [
-            'hananils.list-methods.conjunction' => 'und'
-        ]
+            'hananils.list-methods.conjunction' => 'und',
+        ],
     ],
     'collectionMethods' => [
-        'toList' => function (
-            $field = 'title',
-            $conjunction = false,
-            $link = null,
-            $method = null
-        ) {
-            $data = [];
-
-            foreach ($this as $item) {
-                $text = $item->$field();
-
-                if ($method !== null && method_exists($text, $method)) {
-                    $text = $text->$method();
-                }
-
-                if ($link !== null) {
-                    $href = Str::template($link, [
-                        'kirby' => kirby(),
-                        'site' => site(),
-                        'item' => $item
-                    ]);
-
-                    $data[] = '<a href="' . $href . '">' . $text . '</a>';
-                } else {
-                    $data[] = $text;
-                }
-            }
-
-            return naturalList($data, $conjunction);
-        }
+        'toList' => function ($conjunction = false) {
+            return naturalList($this->toArray(), $conjunction);
+        },
     ],
     'usersMethods' => [
         'toList' => function (
@@ -63,7 +36,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'user' => $user
+                        'user' => $user,
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -73,7 +46,7 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        }
+        },
     ],
     'pagesMethods' => [
         'toList' => function (
@@ -95,7 +68,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'page' => $page
+                        'page' => $page,
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -105,7 +78,7 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        }
+        },
     ],
     'filesMethods' => [
         'toList' => function (
@@ -127,7 +100,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'file' => $file
+                        'file' => $file,
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -137,8 +110,8 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        }
-    ]
+        },
+    ],
 ]);
 
 function naturalList($data, $conjunction = false)
