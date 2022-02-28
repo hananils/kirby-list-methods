@@ -1,6 +1,6 @@
 ![Kirby List Methods](.github/title.png)
 
-**List Methods** is a plugin for [Kirby 3](https://getkirby.com) providing methods to generate comma-separated list from collections like pages, users or files. It allows for custom field selection for the list value, optional conjunctions for the last item (e. g. "and") and custom links for each item that can be defined using Kirby's query language (e. g. `{{page.url}}`).
+**List Methods** is a plugin for [Kirby 3](https://getkirby.com) providing methods to generate comma-separated list from collections like pages, users or files. It allows for custom field selection for the list value, optional conjunctions for the last item (e. g. "and") and custom links for each item that can be defined using Kirby's query language (e. g. `{{page.url}}`). It also provides specific methods to list numeric values like years, shortening ranges for better readability.
 
 ## Installation
 
@@ -39,6 +39,16 @@ $pages->toList();
 $files->toList();
 ```
 
+Creates a list of years:
+
+```php
+// numeric list, returns "2010–2012, 2022" for "2010, 2011, 2012, 2022"
+$page->years()->toNumericList();
+
+// numeric list with "since", return "since 2020" for "2020, 2021, 2022"
+$page->years()->toNumericList(true);
+```
+
 ## Comma-separated list using a custom field or method
 
 Creates a list separated all items with a comma:
@@ -49,6 +59,9 @@ $users->toList('nickname');
 
 // using the field category
 $pages->toList('category');
+
+// with numeric values
+$pages->toNumericList('date');
 ```
 
 ## Comma-separated list using a conjunction
@@ -78,6 +91,10 @@ $pages->toList('title', true, '{{page.url}}');
 
 // link all pages to a custom URL
 $pages->toList('title', true, 'my-custom-path/{{page.category}}');
+
+// link all pages to a custom URL with numeric values
+$pages->toNumericList('date', true, 'my-year-overview/{{page.date.toDate('Y')}}');
+
 ```
 
 You can use Kirby's template syntax with [query language](https://getkirby.com/docs/guide/blueprints/query-language) to fetch any information from the current context, e. g. the current `$user`, `$page` or `$file` object. The `$kirby` and `$site` objects are also available.
@@ -115,6 +132,18 @@ naturalList($data, true);
 
 // this & that
 naturalList($data, '&');
+```
+
+If you are handling numeric values, you can use the `numericList()` helper:
+
+```php
+$data = [2019, 2020, 2021, 2022];
+
+// 2019-2022
+numericList($data);
+
+// since 2022
+numericList($data, true);
 ```
 
 # License
