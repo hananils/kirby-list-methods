@@ -6,15 +6,85 @@ Kirby::plugin('hananils/list-methods', [
     'translations' => [
         'en' => [
             'hananils.list-methods.conjunction' => 'and',
+            'hananils.list-methods.since' => 'since'
         ],
         'de' => [
             'hananils.list-methods.conjunction' => 'und',
-        ],
+            'hananils.list-methods.since' => 'seit'
+        ]
     ],
     'collectionMethods' => [
         'toList' => function ($conjunction = false) {
             return naturalList($this->toArray(), $conjunction);
         },
+        'toNumericList' => function ($field = 'date', $period = true) {
+            $numbers = [];
+
+            foreach ($this as $item) {
+                $numbers = $this->get($field, $item);
+
+                foreach ($numbers as $index => $number) {
+                    if (preg_match('/^\d{4}-\d{2}-\d{2}/', $number)) {
+                        $numbers[$index] = intval(substr($number, 0, 4));
+                    } else {
+                        $numbers[$index] = intval($number);
+                    }
+                }
+            }
+            return numericList($numbers, $period);
+        }
+    ],
+    'fieldMethods' => [
+        'toList' => function ($field, $conjunction = false, $link = null) {
+            $data = Str::split($field->value);
+
+            if ($link !== null) {
+                $type = $field->parent()::CLASS_ALIAS;
+                $linked = [];
+
+                foreach ($data as $value) {
+                    $href = Str::template($link, [
+                        'kirby' => kirby(),
+                        'site' => site(),
+                        'page' => $type === 'page' ? $field->parent() : null,
+                        'user' => $type === 'user' ? $field->parent() : null,
+                        'file' => $type === 'file' ? $field->parent() : null,
+                        'value' => $value
+                    ]);
+
+                    $linked[] = '<a href="' . $href . '">' . $value . '</a>';
+                }
+
+                $data = $linked;
+            }
+
+            return naturalList($data, $conjunction);
+        },
+        'toNumericList' => function ($field, $period = false, $link = null) {
+            $numbers = Str::split($field->value);
+
+            if ($link !== null) {
+                $type = $field->parent()::CLASS_ALIAS;
+                $linked = [];
+
+                foreach ($numbers as $value) {
+                    $href = Str::template($link, [
+                        'kirby' => kirby(),
+                        'site' => site(),
+                        'page' => $type === 'page' ? $field->parent() : null,
+                        'user' => $type === 'user' ? $field->parent() : null,
+                        'file' => $type === 'file' ? $field->parent() : null,
+                        'value' => $value
+                    ]);
+
+                    $linked[] = '<a href="' . $href . '">' . $value . '</a>';
+                }
+
+                $numbers = $linked;
+            }
+
+            return numericList($numbers, $period);
+        }
     ],
     'usersMethods' => [
         'toList' => function (
@@ -36,7 +106,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'user' => $user,
+                        'user' => $user
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -46,7 +116,7 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        },
+        }
     ],
     'pagesMethods' => [
         'toList' => function (
@@ -68,7 +138,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'page' => $page,
+                        'page' => $page
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -78,7 +148,7 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        },
+        }
     ],
     'filesMethods' => [
         'toList' => function (
@@ -100,7 +170,7 @@ Kirby::plugin('hananils/list-methods', [
                     $href = Str::template($link, [
                         'kirby' => kirby(),
                         'site' => site(),
-                        'file' => $file,
+                        'file' => $file
                     ]);
 
                     $data[] = '<a href="' . $href . '">' . $text . '</a>';
@@ -110,8 +180,8 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
-        },
-    ],
+        }
+    ]
 ]);
 
 function naturalList($data, $conjunction = false)
@@ -131,4 +201,70 @@ function naturalList($data, $conjunction = false)
     }
 
     return $last;
+}
+
+function numericList($data, $period = true)
+{
+    $list = '';
+
+    if (!is_array($data)) {
+        return $list;
+    }
+
+    $numbers = [];
+    foreach ($data as $value) {
+        $numbers[] = intval(strip_tags($value));
+    }
+
+    ksort($numbers);
+
+    if ($period === true) {
+        $year = date('Y');
+
+        if (kirby()->language()) {
+            $locale = kirby()
+                ->language()
+                ->locale();
+        } else {
+            $locale = option('locale');
+        }
+
+        if ($year - count($numbers) + 1 === reset($numbers)) {
+            return I18n::translate(
+                'hananils.list-methods.since',
+                'since',
+                $locale
+            ) .
+                ' ' .
+                end($data);
+        }
+    }
+
+    foreach ($numbers as $index => $number) {
+        $number = intval($number);
+        $previous = null;
+        $next = null;
+
+        if (isset($numbers[$index - 1])) {
+            $previous = intval($numbers[$index - 1]);
+        }
+
+        if (isset($numbers[$index + 1])) {
+            $next = intval($numbers[$index + 1]);
+        }
+
+        if ($previous === $number - 1 && $next === $number + 1) {
+            continue;
+        }
+
+        if ($previous && $previous !== $number - 1) {
+            $list .= ', ';
+        } elseif ($previous) {
+            $list .= '–';
+        }
+
+        $list .= $data[$index];
+    }
+
+    return $list;
 }
