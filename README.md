@@ -99,7 +99,26 @@ $pages->toNumericList('date', true, 'my-year-overview/{{page.date.toDate('Y')}}'
 
 You can use Kirby's template syntax with [query language](https://getkirby.com/docs/guide/blueprints/query-language) to fetch any information from the current context, e. g. the current `$user`, `$page` or `$file` object. The `$kirby` and `$site` objects are also available.
 
-# Collection method
+# Content methods
+
+When dealing with a single page or user, there are methods to generate lists from content field:
+
+```php
+// Given the fields name and job, creates "Jane Doe, astrophysicist"
+echo $user->asList(['name', 'job']);
+
+// Given the fields start and end, creates "2020–2023"
+echo $page->asNumericList(['start', 'end']);
+```
+
+Both methods, `asList` and `asNumericList`, support setting a custom conjunction via a secondary attribute:
+
+```php
+//  Given the fields name and job, creates "Jane Doe: astrophysicist"
+echo $page->asList(['name', 'job'], ': ');
+```
+
+# Collection methods
 
 The plugin also features a general, more simple collection method which is a shortcut the `naturalList()` helper and only allows for a custom conjunction:
 
@@ -148,5 +167,4 @@ numericList($data, true);
 
 # License
 
-This plugin is provided freely under the [MIT license](LICENSE.md) by [hana+nils · Büro für Gestaltung](https://hananils.de).  
-We create visual designs for digital and analog media.
+This plugin is provided freely under the [MIT license](LICENSE.md) by [hana+nils · Büro für Gestaltung](https://hananils.de). We create visual designs for digital and analog media.

@@ -118,6 +118,30 @@ Kirby::plugin('hananils/list-methods', [
             return naturalList($data, $conjunction);
         }
     ],
+    'userMethods' => [
+        'asList' => function ($fields = [], $conjunction = false) {
+            $data = [];
+
+            foreach ($fields as $field) {
+                $data[] = $this->content()
+                    ->get($field)
+                    ->value();
+            }
+
+            return naturalList($data, $conjunction);
+        },
+        'asNumericList' => function ($fields = [], $conjunction = false) {
+            $data = [];
+
+            foreach ($fields as $field) {
+                $data[] = $this->content()
+                    ->get($field)
+                    ->value();
+            }
+
+            return numericList($data, $conjunction);
+        }
+    ],
     'pagesMethods' => [
         'toList' => function (
             $field = 'title',
@@ -148,6 +172,30 @@ Kirby::plugin('hananils/list-methods', [
             }
 
             return naturalList($data, $conjunction);
+        }
+    ],
+    'pageMethods' => [
+        'asList' => function ($fields = [], $conjunction = false) {
+            $data = [];
+
+            foreach ($fields as $field) {
+                $data[] = $this->content()
+                    ->get($field)
+                    ->value();
+            }
+
+            return naturalList($data, $conjunction);
+        },
+        'asNumericList' => function ($fields = [], $conjunction = false) {
+            $data = [];
+
+            foreach ($fields as $field) {
+                $data[] = $this->content()
+                    ->get($field)
+                    ->value();
+            }
+
+            return numericList($data, $conjunction);
         }
     ],
     'filesMethods' => [
