@@ -234,6 +234,9 @@ Kirby::plugin('hananils/list-methods', [
 
 function naturalList($data, $conjunction = false)
 {
+    // Remove empty items, trim values
+    $data = array_map('trim', array_filter($data));
+
     if ($conjunction === false) {
         return implode(', ', $data);
     }
@@ -258,6 +261,9 @@ function numericList($data, $period = true)
     if (!is_array($data)) {
         return $list;
     }
+
+    // Remove empty items, trim values
+    $data = array_map('trim', array_filter($data));
 
     $numbers = [];
     foreach ($data as $value) {
