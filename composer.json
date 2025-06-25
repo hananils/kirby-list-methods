@@ -1,16 +1,27 @@
 {
     "name": "hananils/kirby-list-methods",
-    "description": "Methods to convert Kirby objects to natural comma-speparated lists",
-    "type": "kirby-plugin",
+    "description": "List Methods is a plugin for Kirby providing methods to generate comma-separated list from collections like pages, users or files.",
     "license": "MIT",
-    "version": "2.2.1",
+    "type": "kirby-plugin",
+    "version": "3.0.0",
     "authors": [
         {
             "name": "hana+nils · Büro für Gestaltung",
             "email": "buero@hananils.de"
         }
     ],
+    "homepage": "https://kirby.hananils.de/plugins/list-methods",
     "require": {
-        "getkirby/composer-installer": "^1.1"
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.47",
+        "rector/rector": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        },
+        "sort-packages": true
     }
 }

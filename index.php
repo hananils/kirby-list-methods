@@ -1,6 +1,8 @@
 <?php
 
-use Kirby\Toolkit\Template;
+use Kirby\Cms\App as Kirby;
+use Kirby\Toolkit\I18n;
+use Kirby\Toolkit\Str;
 
 Kirby::plugin('hananils/list-methods', [
     'translations' => [
@@ -24,8 +26,10 @@ Kirby::plugin('hananils/list-methods', [
                 $numbers = $this->get($field, $item);
 
                 foreach ($numbers as $index => $number) {
-                    if (preg_match('/^\d{4}-\d{2}-\d{2}/', $number)) {
-                        $numbers[$index] = intval(substr($number, 0, 4));
+                    if (preg_match('/^\d{4}-\d{2}-\d{2}/', (string) $number)) {
+                        $numbers[$index] = intval(
+                            substr((string) $number, 0, 4)
+                        );
                     } else {
                         $numbers[$index] = intval($number);
                     }
@@ -123,9 +127,7 @@ Kirby::plugin('hananils/list-methods', [
             $data = [];
 
             foreach ($fields as $field) {
-                $data[] = $this->content()
-                    ->get($field)
-                    ->value();
+                $data[] = $this->content()->get($field)->value();
             }
 
             return naturalList($data, $conjunction);
@@ -134,9 +136,7 @@ Kirby::plugin('hananils/list-methods', [
             $data = [];
 
             foreach ($fields as $field) {
-                $data[] = $this->content()
-                    ->get($field)
-                    ->value();
+                $data[] = $this->content()->get($field)->value();
             }
 
             return numericList($data, $conjunction);
@@ -179,9 +179,7 @@ Kirby::plugin('hananils/list-methods', [
             $data = [];
 
             foreach ($fields as $field) {
-                $data[] = $this->content()
-                    ->get($field)
-                    ->value();
+                $data[] = $this->content()->get($field)->value();
             }
 
             return naturalList($data, $conjunction);
@@ -190,9 +188,7 @@ Kirby::plugin('hananils/list-methods', [
             $data = [];
 
             foreach ($fields as $field) {
-                $data[] = $this->content()
-                    ->get($field)
-                    ->value();
+                $data[] = $this->content()->get($field)->value();
             }
 
             return numericList($data, $conjunction);
@@ -276,9 +272,7 @@ function numericList($data, $period = true)
         $year = date('Y');
 
         if (kirby()->language()) {
-            $locale = kirby()
-                ->language()
-                ->locale();
+            $locale = kirby()->language()->locale();
         } else {
             $locale = option('locale');
         }
