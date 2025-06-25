@@ -1,6 +1,6 @@
 ![Kirby List Methods](.github/title.png)
 
-**List Methods** is a plugin for [Kirby 3](https://getkirby.com) providing methods to generate comma-separated list from collections like pages, users or files. It allows for custom field selection for the list value, optional conjunctions for the last item (e. g. "and") and custom links for each item that can be defined using Kirby's query language (e. g. `{{page.url}}`). It also provides specific methods to list numeric values like years, shortening ranges for better readability.
+**List Methods** is a plugin for [Kirby](https://getkirby.com) providing methods to generate comma-separated list from collections like pages, users or files. It allows for custom field selection for the list value, optional conjunctions for the last item (e. g. "and") and custom links for each item that can be defined using Kirby's query language (e. g. `{{page.url}}`). It also provides specific methods to list numeric values like years, shortening ranges for better readability.
 
 ## Installation
 
