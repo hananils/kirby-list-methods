@@ -228,10 +228,26 @@ Kirby::plugin('hananils/list-methods', [
     ]
 ]);
 
-function naturalList($data, $conjunction = false)
-{
+function naturalList(
+    $data,
+    $conjunction = false,
+    string $prefix = '',
+    string $suffix = ''
+) {
     // Remove empty items, trim values
-    $data = array_map('trim', array_filter($data));
+    $data = array_map(function ($item) use ($prefix, $suffix) {
+        $item = trim($item);
+
+        if ($prefix && !str_starts_with($item, $prefix)) {
+            $item = $prefix . $item;
+        }
+
+        if ($suffix && !str_starts_with($item, $suffix)) {
+            $item = $item . $suffix;
+        }
+
+        return $item;
+    }, array_filter($data));
 
     if ($conjunction === false) {
         return implode(', ', $data);
