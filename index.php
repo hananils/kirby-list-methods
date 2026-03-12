@@ -275,7 +275,7 @@ function numericList($data, $period = true)
     }
 
     // Remove empty items, trim values
-    $data = array_map('trim', array_filter($data));
+    $data = array_values(array_map('trim', array_filter($data)));
 
     $numbers = [];
     foreach ($data as $value) {
