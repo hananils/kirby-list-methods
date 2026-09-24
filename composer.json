@@ -1,9 +1,9 @@
 {
     "name": "hananils/kirby-list-methods",
-    "description": "List Methods is a plugin for Kirby providing methods to generate comma-separated list from collections like pages, users or files.",
+    "description": "List Methods offers a simple interface to generate comma-separated lists from collections like pages, users or files. It allows for the customization of values, separators and links and provides specific methods to list numeric values like years, shortening ranges for better readability.",
     "license": "MIT",
     "type": "kirby-plugin",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "authors": [
         {
             "name": "hana+nils · Büro für Gestaltung",

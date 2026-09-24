@@ -1,33 +1,14 @@
-![Kirby List Methods](.github/title.png)
+[![List Methods for Kirby CMS](header.png)](https://kirby.hananils.de/plugins/list-methods)
 
-**List Methods** is a plugin for [Kirby](https://getkirby.com) providing methods to generate comma-separated list from collections like pages, users or files. It allows for custom field selection for the list value, optional conjunctions for the last item (e. g. "and") and custom links for each item that can be defined using Kirby's query language (e. g. `{{page.url}}`). It also provides specific methods to list numeric values like years, shortening ranges for better readability.
+List Methods offers a simple interface to generate comma-separated lists from collections like pages, users or files. It allows for the customization of values, separators and links and provides specific methods to list numeric values like years, shortening ranges for better readability.
 
-> [!NOTE]
-> Please check out the online documentation at [kirby.hananils.de/plugins/list-methods](https://kirby.hananils.de/plugins/list-methods) for further information.
+## Introduction
 
-## Installation
-
-### Download
-
-Download and copy this repository to `/site/plugins/list-methods`.
-
-### Git submodule
-
-```
-git submodule add https://github.com/hananils/kirby-list-methods.git site/plugins/list-methods
-```
-
-### Composer
-
-```
-composer require hananils/kirby-list-methods
-```
-
-# Pages, Users and File Methods
+### Pages, Users and File Methods
 
 There are different options to create lists from users, pages or files collections:
 
-## Comma-separated list using the primary field
+#### Comma-separated list using the primary field
 
 Creates a list separated all items with a comma:
 
@@ -52,7 +33,7 @@ $page->years()->toNumericList();
 $page->years()->toNumericList(true);
 ```
 
-## Comma-separated list using a custom field or method
+#### Comma-separated list using a custom field or method
 
 Creates a list separated all items with a comma:
 
@@ -67,7 +48,7 @@ $pages->toList('category');
 $pages->toNumericList('date');
 ```
 
-## Comma-separated list using a conjunction
+#### Comma-separated list using a conjunction
 
 Creates a list separated all items with a comma but the last which is connected with a cunjunction:
 
@@ -81,7 +62,7 @@ $pages->toList('title', '&')
 
 The default conjunction `and` is provided in English or German depending on your language settings.
 
-## Comma-separated list with dynamic links
+#### Comma-separated list with dynamic links
 
 Creates a list linking to a custom destination:
 
@@ -100,9 +81,9 @@ $pages->toNumericList('date', true, 'my-year-overview/{{page.date.toDate('Y')}}'
 
 ```
 
-You can use Kirby's template syntax with [query language](https://getkirby.com/docs/guide/blueprints/query-language) to fetch any information from the current context, e. g. the current `$user`, `$page` or `$file` object. The `$kirby` and `$site` objects are also available.
+You can use Kirby’s template syntax with [query language](https://getkirby.com/docs/guide/blueprints/query-language) to fetch any information from the current context, e. g. the current `$user`, `$page` or `$file` object. The `$kirby` and `$site` objects are also available.
 
-# Content methods
+### Content methods
 
 When dealing with a single page or user, there are methods to generate lists from content field:
 
@@ -121,7 +102,7 @@ Both methods, `asList` and `asNumericList`, support setting a custom conjunction
 echo $page->asList(['name', 'job'], ': ');
 ```
 
-# Collection methods
+### Collection methods
 
 The plugin also features a general, more simple collection method which is a shortcut the `naturalList()` helper and only allows for a custom conjunction:
 
@@ -139,9 +120,9 @@ echo $choices->toList(true);
 echo $choices->toList('&');
 ```
 
-# Helper
+### Helper
 
-If you'd like to create a list outside of the Kirby objects, from an array for instance, you can use the `naturalList()` helper. It accepts a flat array and a conjunction, there is no custom key selection or template syntax support:
+If you’d like to create a list outside of the Kirby objects, from an array for instance, you can use the `naturalList()` helper. It accepts a flat array and a conjunction, there is no custom key selection or template syntax support:
 
 ```php
 $data = ['this', 'that'];
@@ -168,6 +149,53 @@ numericList($data);
 numericList($data, true);
 ```
 
-# License
+## Installation
 
-This plugin is provided freely under the [MIT license](LICENSE.md) by [hana+nils · Büro für Gestaltung](https://hananils.de). We create visual designs for digital and analog media.
+By default, plugins in Kirby reside in a special folder located at `/site/plugins`. Each plugin is installed in its proprietary subfolder. This installation can be handled in four different ways: you can either install them manually or manage them using Kirby CLI, Git submodules or Composer. You can install List Methods either way and should choose the method suiting your project best.
+
+Please note that all examples given here assume you are using the default plugin root. [If you changed your plugin root](https://getkirby.com/docs/reference/system/roots/plugins), e. g. with a custom folder setup, you’ll also have to adjust the paths given in this guide. For further information on how to manage plugins, please read the [official Kirby plugin introduction](https://getkirby.com/docs/guide/plugins/plugin-basics).
+
+### Download
+
+Download and copy this repository to `/site/plugins/list-methods`.
+
+### Kirby CLI
+
+```shell
+kirby plugin:install hananils/kirby-list-methods
+```
+
+### Git submodule
+
+```bash
+git submodule add \
+    https://github.com/hananils/kirby-list-methods.git \
+    site/plugins/list-methods
+```
+
+### Composer
+
+```shell
+composer require hananils/kirby-list-methods
+```
+
+## Documentation
+
+[![Find all documentation at kirby.hananils.de](footer.png)](https://kirby.hananils.de/plugins/list-methods)
+
+Where possible, files contain inline annotations. For extended documentation, please visit our dedicated plugin site at [kirby.hananils.de/​plugins/​list-methods](https://kirby.hananils.de/plugins/list-methods).
+
+### Reference
+
+- [Pages Methods](https://kirby.hananils.de/plugins/list-methods/pages-methods)
+- [Page Methods](https://kirby.hananils.de/plugins/list-methods/page-methods)
+- [Field Methods](https://kirby.hananils.de/plugins/list-methods/field-methods)
+- [Files Methods](https://kirby.hananils.de/plugins/list-methods/files-methods)
+- [Users Methods](https://kirby.hananils.de/plugins/list-methods/users-methods)
+- [User Methods](https://kirby.hananils.de/plugins/list-methods/user-methods)
+- [Collection Methods](https://kirby.hananils.de/plugins/list-methods/collection-methods)
+- [Helpers](https://kirby.hananils.de/plugins/list-methods/helpers)
+
+## License
+
+This plugin is provided freely under the [MIT license](https://kirby.hananils.de/plugins/list-methods/license) by [hana+nils · Büro für Gestaltung](https://kirby.hananils.de). We create visual designs for digital and analog media.
